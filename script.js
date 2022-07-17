@@ -1,5 +1,5 @@
     //CREATE THE MAP    
-const pondSize = 6*6
+const pondSize = 8*8
 const pond = document.querySelector('.pond')
 pond.classList.add("pond")
 
