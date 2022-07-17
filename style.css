@@ -28,6 +28,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 .water{
     height: 100px;
@@ -47,3 +48,25 @@ body{
     position: absolute;
     border-radius: 50%;
 }
+.frog{
+    position: absolute;
+    aspect-ratio: 1;
+    height: 75px;
+}
+.fly{
+    position: absolute;
+    aspect-ratio: 1;
+    height: 75px;
+}
+.rotate {
+    animation: rotation 4s infinite linear;
+  }
+  
+  @keyframes rotation {
+    from {
+      transform: rotate(359deg);
+    }
+    to {
+      transform: rotate(0deg);
+    }
+  }
