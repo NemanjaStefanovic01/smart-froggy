@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Open+Sans:wght@500&family=Rajdhani:wght@600&display=swap');
 *{
     margin: 0;
     padding: 0;
@@ -11,8 +12,11 @@ body{
     background-size:75px 100px;
 
     display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
+
+    font-family: 'Rajdhani', sans-serif;
 }
 .pond{
     width: auto;
@@ -69,4 +73,36 @@ body{
     to {
       transform: rotate(0deg);
     }
-  }
+}
+.text{
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.text h1{
+    font-size: xxx-large;
+    background-color: rgb(64, 157, 64);
+    color: aliceblue;
+    padding: 0 30px;
+}
+.text p{
+    font-size: x-large;
+}
+
+.start{
+    width: 200px;
+}
+.start .btn-start{
+    border: none;
+    border-radius: 15px;
+
+    font-family: 'Rajdhani', sans-serif;
+    font-size: xx-large;
+    padding: 5% 30%;
+    cursor: pointer;
+
+    background-color: rgb(64, 157, 64);
+    color: aliceblue;
+}

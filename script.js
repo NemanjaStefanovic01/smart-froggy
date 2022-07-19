@@ -74,3 +74,14 @@ fly.classList.add('rotate')
 
 spacesList[flyPosition].appendChild(fly)
 spacesList[flyPosition].classList.add('gameObject')
+
+
+    //STARTING THE SEARCH   
+//Start
+const startBtn = document.querySelector('.btn-start')
+
+startBtn.addEventListener("click", startSearch)
+
+function startSearch(){
+    
+}
