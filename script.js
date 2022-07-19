@@ -56,9 +56,7 @@ const frog = document.createElement('img')
 frog.src = "images/froggy.png"
 frog.classList.add('frog')
 
-spacesList[frogPosition].appendChild(frog)
-spacesList[frogPosition].classList.add('gameObject')
-spacesList[frogPosition].children[0].src = 'images/waterLilyHover.png'
+setFrogToPosition(frogPosition)
 
 //fly
 let flyPosition = Math.floor(Math.random() * ((8*8)+1))
@@ -83,5 +81,35 @@ const startBtn = document.querySelector('.btn-start')
 startBtn.addEventListener("click", startSearch)
 
 function startSearch(){
-    
+    let availableSp = checkAvailabeSpaces(frogPosition)
+    console.log(availableSp);
+    let primaryDirection     // 1 up| 2 right| 3 down| 4 left
+    let secundaryDirection   // 1 up| 2 right| 3 down| 4 left
+
+    // function to calculate primary and secundary directions
+}
+
+let checkAvailabeSpaces = (position) => {
+    let currentPosition = position
+
+    let availabeSpaces = [
+        currentPosition + 1, //rigth
+        currentPosition - 1, //left
+        currentPosition + 8, //below
+        currentPosition - 8 //above
+    ]
+
+    availabeSpaces.forEach((element, index) => {
+        if(!spacesList[element].classList.contains('selected')){
+            availabeSpaces.splice(index, 1)
+        }
+    });
+
+    return availabeSpaces
+} 
+
+function setFrogToPosition(frogPosition){
+    spacesList[frogPosition].appendChild(frog)
+    spacesList[frogPosition].classList.add('gameObject')
+    spacesList[frogPosition].children[0].src = 'images/waterLilyHover.png'
 }
