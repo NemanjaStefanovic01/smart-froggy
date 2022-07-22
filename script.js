@@ -99,11 +99,19 @@ let checkAvailabeSpaces = (position) => {
         currentPosition - 8 //above
     ]
 
-    availabeSpaces.forEach((element, index) => {
-        if(!spacesList[element].classList.contains('selected')){
-            availabeSpaces.splice(index, 1)
+    // availabeSpaces.forEach((element, index) => {
+    //     if(!spacesList[element].classList.contains('selected')){
+    //         availabeSpaces.splice(index, 1)
+    //         index--
+    //     }
+    // });
+
+    for(var i = 0; i < availabeSpaces.length; i++){
+        if(!spacesList[availabeSpaces[i]].classList.contains('selected')){
+            availabeSpaces.splice(i, 1)
+            i--
         }
-    });
+    }
 
     return availabeSpaces
 } 
