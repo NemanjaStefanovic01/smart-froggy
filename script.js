@@ -83,11 +83,22 @@ startBtn.addEventListener("click", startSearch)
 function startSearch(){
     let availableSp = checkAvailabeSpaces(frogPosition)
     console.log(availableSp);
-    let primaryDirection     // 1 up| 2 right| 3 down| 4 left
-    let secundaryDirection   // 1 up| 2 right| 3 down| 4 left
 
-    // function to calculate primary and secundary directions
+    var dirs = calculateDirs(frogPosition, flyPosition)
+
+    let primaryDirection = dirs[0]     // 1 up| 2 right| 3 down| 4 left
+    let secundaryDirection = dirs[1]     // 1 up| 2 right| 3 down| 4 left
+
+    console.log("Primary: ", primaryDirection, "   Secundary: ", secundaryDirection)
 }
+
+
+function setFrogToPosition(frogPosition){
+    spacesList[frogPosition].appendChild(frog)
+    spacesList[frogPosition].classList.add('gameObject')
+    spacesList[frogPosition].children[0].src = 'images/waterLilyHover.png'
+}
+
 
 let checkAvailabeSpaces = (position) => {
     let currentPosition = position
@@ -99,13 +110,6 @@ let checkAvailabeSpaces = (position) => {
         currentPosition - 8 //above
     ]
 
-    // availabeSpaces.forEach((element, index) => {
-    //     if(!spacesList[element].classList.contains('selected')){
-    //         availabeSpaces.splice(index, 1)
-    //         index--
-    //     }
-    // });
-
     for(var i = 0; i < availabeSpaces.length; i++){
         if(!spacesList[availabeSpaces[i]].classList.contains('selected')){
             availabeSpaces.splice(i, 1)
@@ -116,8 +120,57 @@ let checkAvailabeSpaces = (position) => {
     return availabeSpaces
 } 
 
-function setFrogToPosition(frogPosition){
-    spacesList[frogPosition].appendChild(frog)
-    spacesList[frogPosition].classList.add('gameObject')
-    spacesList[frogPosition].children[0].src = 'images/waterLilyHover.png'
+function getDecimalPart(num) { //function that returns decimal num of float
+    if (Number.isInteger(num)) {
+      return 0;
+    }
+  
+    const decimalStr = num.toString().split('.')[1];
+    return Number(decimalStr);
+}
+let calculateDirs = (frogPosition, flyPosition) => {
+    var moveX
+    var moveY
+    var dirs = []
+
+    // calc num of rows to move (up down)
+    var numOfRows
+    if(getDecimalPart(Math.abs(frogPosition - flyPosition)/8) === 5){ // round rounds to oposite of what we need
+        numOfRows = Math.round(Math.abs(frogPosition - flyPosition)/8) - 1
+    }else{
+        numOfRows = Math.round(Math.abs(frogPosition - flyPosition)/8)
+    }
+    
+    if(frogPosition > flyPosition && numOfRows >= 1){
+        moveY = 1
+    }else if(frogPosition < flyPosition && numOfRows >= 1)
+        moveY = 3
+
+    //calc num of cols to move (left right)
+    var numOfCols
+    if(frogPosition > flyPosition){
+        var ajacentSpace = frogPosition - (numOfRows * 8)
+        numOfCols = Math.abs(flyPosition - ajacentSpace)
+        
+        if(ajacentSpace < flyPosition){
+            moveX = 4
+        }else
+            moveX = 2
+        
+    }else{
+        var ajacentSpace = (numOfRows * 8) + frogPosition
+        numOfCols = Math.abs(flyPosition - ajacentSpace)
+        
+        if(ajacentSpace > flyPosition){
+            moveX = 4
+        }else
+            moveX = 2
+    }
+
+    if(numOfCols < numOfRows){
+        dirs.push(moveX, moveY)
+    }else
+        dirs.push(moveY, moveX)
+
+    return dirs
 }
