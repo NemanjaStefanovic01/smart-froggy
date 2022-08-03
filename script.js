@@ -81,17 +81,34 @@ const startBtn = document.querySelector('.btn-start')
 startBtn.addEventListener("click", startSearch)
 
 function startSearch(){
-    let availableSp = checkAvailabeSpaces(frogPosition)
+    moveFrog()
+}
 
+let moveFrog = () =>{
+    //Calculate direction
     var dirs = caluclateDirs(frogPosition, flyPosition)
 
     let primaryDirection = dirs[0]     // 1 up| 2 right| 3 down| 4 left
     let secundaryDirection = dirs[1]     // 1 up| 2 right| 3 down| 4 left
 
-    console.log("Primary: ", primaryDirection, "   Secundary: ", secundaryDirection)
+    //console.log("Primary: ", primaryDirection, "   Secundary: ", secundaryDirection)
+
+//MOVE FROG 
+    //check if any of dirs alre available
+    let availableSp = checkAvailabeSpaces(frogPosition)
+    console.log("available spaces: " + availableSp)
+    let availableDirs = checkAvailableDirections(availableSp)
+    console.log("available dirs: " + availableDirs)
+    let moveDirection = checkMoveDirection(availableDirs, primaryDirection, secundaryDirection)
+    console.log("move direction: " + moveDirection)
+
+    //move the froggy
+    if(moveDirection > 0){
+
+    }
 }
 
-
+//helpfull functions
 function setFrogToPosition(frogPosition){
     spacesList[frogPosition].appendChild(frog)
     spacesList[frogPosition].classList.add('gameObject')
@@ -132,35 +149,35 @@ let caluclateDirs = (frogPosition, targetPosition) => {
 
     //calculate num of rows
     let frogRow = getRowOfPosition(frogPosition)
-    let flyRow = getRowOfPosition(flyPosition)
+    let flyRow = getRowOfPosition(targetPosition)
     
     numOfRows = Math.abs(frogRow - flyRow)
 
     //get ajacent space in target row
     let ajacentSp
-    if(frogPosition > flyPosition){
+    if(frogPosition > targetPosition){
         ajacentSp = frogPosition - numOfRows * 8
     }else{
         ajacentSp = frogPosition + numOfRows * 8
     }
 
     //get nu of cols
-    if(ajacentSp > flyPosition){
-        numOfCols = ajacentSp - flyPosition
+    if(ajacentSp > targetPosition){
+        numOfCols = ajacentSp - targetPosition
     }else{
-        numOfCols = ajacentSp + flyPosition
+        numOfCols = ajacentSp + targetPosition
     }
 
     //form primary and secundary direction
     let moveY
-    if(frogPosition > flyPosition){
+    if(frogPosition > targetPosition){
         moveY = 1
     }else{
         moveY = 3
     }
 
     let moveX
-    if(ajacentSp > flyPosition){
+    if(ajacentSp > targetPosition){
         moveX = 4
     }else {
         moveX = 2
@@ -175,6 +192,34 @@ let caluclateDirs = (frogPosition, targetPosition) => {
     return dirs
 }
 
+
+let checkAvailableDirections = (availabeSpaces) =>{
+    let d = []
+    availabeSpaces.forEach(element => {
+        if(element === frogPosition + 1){
+            d.push(2)
+        }else if(element === frogPosition - 1){
+            d.push(4)
+        }else if(element === frogPosition + 8){
+            d.push(3)
+        }else if(element=== frogPosition - 8){
+            d.push(1)
+        }
+    });
+    return d
+}
+let checkMoveDirection = (availableDirs, pd, sd) =>{
+    availableDirs.forEach(element => {
+        if(element === pd){
+            return pd
+        }else if(element === sd){
+            return sd
+        }else{
+            //Vrati bilo koju slobodnu direkciju
+            return 0
+        }
+    });
+}
 
 // let calculateDirs = (frogPosition, flyPosition) => {
 //     var moveX
