@@ -81,7 +81,8 @@ const startBtn = document.querySelector('.btn-start')
 startBtn.addEventListener("click", startSearch)
 
 function startSearch(){
-    moveFrog()
+    //moveFrog()
+    setInterval(moveFrog, 250);
 }
 
 let moveFrog = () =>{
@@ -96,15 +97,27 @@ let moveFrog = () =>{
 //MOVE FROG 
     //check if any of dirs alre available
     let availableSp = checkAvailabeSpaces(frogPosition)
-    console.log("available spaces: " + availableSp)
+    //console.log("available spaces: " + availableSp)
     let availableDirs = checkAvailableDirections(availableSp)
-    console.log("available dirs: " + availableDirs)
+    //console.log("available dirs: " + availableDirs)
     let moveDirection = checkMoveDirection(availableDirs, primaryDirection, secundaryDirection)
-    console.log("move direction: " + moveDirection)
+    //console.log("move direction: " + moveDirection)
 
     //move the froggy
     if(moveDirection > 0){
+        let movePos
+        
+        if(moveDirection === 1){
+            movePos = frogPosition - 8
+        }else if(moveDirection === 2){
+            movePos = frogPosition + 1
+        }else if(moveDirection === 3){
+            movePos = frogPosition + 8
+        }else if(moveDirection === 4){
+            movePos = frogPosition - 1
+        }
 
+        setFrogToPosition(movePos)
     }
 }
 
@@ -209,16 +222,18 @@ let checkAvailableDirections = (availabeSpaces) =>{
     return d
 }
 let checkMoveDirection = (availableDirs, pd, sd) =>{
+    let dir
     availableDirs.forEach(element => {
         if(element === pd){
-            return pd
+            dir = pd
         }else if(element === sd){
-            return sd
+            dir = sd
         }else{
             //Vrati bilo koju slobodnu direkciju
-            return 0
+            dir = 0
         }
     });
+    return dir
 }
 
 // let calculateDirs = (frogPosition, flyPosition) => {
